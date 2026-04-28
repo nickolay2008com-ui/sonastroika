@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Реализовать себя через сакральные данные</title>
+  <meta name="description" content="Минилендинг: помогаю найти ориентиры для собственного проявления через сакральные данные — без мистификации, с опорой на ваш реальный опыт, ощущения и движение к реализации." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #f4efe7;
+      --bg-soft: #efe7dc;
+      --paper: rgba(255,255,255,0.52);
+      --text: #1f1a17;
+      --muted: #655b53;
+      --line: rgba(53, 39, 30, 0.14);
+      --accent: #7c5a3a;
+      --accent-2: #b0885f;
+      --accent-3: #2f6b62;
+      --shadow: 0 20px 60px rgba(73, 51, 35, 0.12);
+      --radius: 24px;
+      --radius-lg: 36px;
+      --max: 1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Manrope", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(176,136,95,0.16), transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(47,107,98,0.12), transparent 24%),
+        radial-gradient(circle at 50% 85%, rgba(124,90,58,0.10), transparent 28%),
+        linear-gradient(180deg, #f7f2eb 0%, #f2ebe1 48%, #efe6da 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.28;
+      background-image:
+        linear-gradient(rgba(70,55,44,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(70,55,44,0.045) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+    }
+
+    .wrap{
+      width:min(calc(100% - 32px), var(--max));
+      margin:0 auto;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity .9s ease, transform .9s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .stagger > *{
+      opacity:0;
+      transform:translateY(18px);
+      animation: rise .9s ease forwards;
+    }
+
+    .stagger > *:nth-child(1){animation-delay:.1s}
+    .stagger > *:nth-child(2){animation-delay:.22s}
+    .stagger > *:nth-child(3){animation-delay:.34s}
+    .stagger > *:nth-child(4){animation-delay:.46s}
+    .stagger > *:nth-child(5){animation-delay:.58s}
+    .stagger > *:nth-child(6){animation-delay:.7s}
+
+    @keyframes rise{
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(2px);
+      pointer-events:none;
+      opacity:.7;
+    }
+
+    .orb.one{
+      width:280px;height:280px;
+      top:-60px; right:-60px;
+      background:radial-gradient(circle at 35% 35%, rgba(176,136,95,0.38), rgba(176,136,95,0.08) 55%, transparent 70%);
+    }
+
+    .orb.two{
+      width:240px;height:240px;
+      left:-80px; bottom:-60px;
+      background:radial-gradient(circle at 50% 50%, rgba(47,107,98,0.22), rgba(47,107,98,0.05) 58%, transparent 72%);
+    }
+
+    header{
+      padding:18px 0 0;
+      position:relative;
+      z-index:2;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 18px;
+      background:rgba(255,255,255,0.38);
+      border:1px solid rgba(82,61,46,0.1);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius:999px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:42px;height:42px;border-radius:50%;
+      display:grid;place-items:center;
+      background:
+        radial-gradient(circle at 30% 30%, #f7efe5, #d6bea2 62%, #8a6846 100%);
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.7),
+        0 8px 20px rgba(124,90,58,0.18);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(62,43,29,0.22);
+    }
+
+    .brand-mark::before{ inset:8px; }
+    .brand-mark::after{ inset:14px; }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1;
+    }
+
+    .brand-text strong{
+      font-size:.95rem;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+
+    .brand-text span{
+      font-size:.74rem;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .nav-link{
+      text-decoration:none;
+      color:var(--muted);
+      font-size:.95rem;
+      font-weight:600;
+      padding:10px 14px;
+      border-radius:999px;
+      transition:.25s ease;
+    }
+
+    .nav-link:hover{
+      color:var(--text);
+      background:rgba(255,255,255,0.42);
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:50px;
+      padding:0 22px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:.98rem;
+      cursor:pointer;
+      transition:transform .22s ease, box-shadow .22s ease, background .22s ease, color .22s ease;
+    }
+
+    .btn:active{ transform:translateY(1px) scale(.99); }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      box-shadow:0 14px 28px rgba(124,90,58,0.26);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 34px rgba(124,90,58,0.3);
+      filter:saturate(1.06);
+    }
+
+    .btn-secondary{
+      color:var(--text);
+      background:rgba(255,255,255,0.52);
+      border:1px solid rgba(60,44,32,0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,0.72);
+      box-shadow:0 12px 22px rgba(58,42,29,0.1);
+    }
+
+    .hero{
+      padding:28px 0 48px;
+    }
+
+    .hero-panel{
+      position:relative;
+      overflow:hidden;
+      border-radius: var(--radius-lg);
+      border:1px solid rgba(82,61,46,0.1);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.52), rgba(255,255,255,0.22)),
+        linear-gradient(180deg, rgba(255,255,255,0.26), rgba(255,255,255,0.08));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 5vw, 44px);
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:32px;
+      align-items:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.5);
+      border:1px solid rgba(60,44,32,0.08);
+      color:var(--muted);
+      font-weight:700;
+      font-size:.84rem;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent-3);
+      box-shadow:0 0 0 6px rgba(47,107,98,0.1);
+    }
+
+    h1,h2,h3{
+      font-family:"Cormorant Garamond", serif;
+      margin:0;
+      line-height:.94;
+      letter-spacing:-0.02em;
+      font-weight:700;
+    }
+
+    h1{
+      font-size:clamp(3rem, 7vw, 6.8rem);
+      max-width:10ch;
+      margin-top:18px;
+    }
+
+    .hero-lead{
+      margin:24px 0 0;
+      max-width:58ch;
+      font-size:clamp(1rem, 1.5vw, 1.16rem);
+      line-height:1.72;
+      color:var(--muted);
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:28px;
+    }
+
+    .hero-note{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .visual{
+      min-height:460px;
+      position:relative;
+      display:grid;
+      place-items:center;
+    }
+
+    .mandala{
+      width:min(100%, 480px);
+      aspect-ratio:1;
+      position:relative;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.9) 0 16%, rgba(255,255,255,0.45) 16.2%, transparent 16.6%),
+        radial-gradient(circle at center, transparent 0 28%, rgba(124,90,58,0.12) 28.2%, transparent 28.9%),
+        radial-gradient(circle at center, transparent 0 39%, rgba(47,107,98,0.14) 39.2%, transparent 39.9%),
+        radial-gradient(circle at center, transparent 0 49%, rgba(176,136,95,0.14) 49.2%, transparent 49.9%),
+        radial-gradient(circle at center, rgba(255,255,255,0.35), rgba(255,255,255,0.06) 58%, transparent 76%);
+      box-shadow:
+        inset 0 0 0 1px rgba(80,58,42,0.08),
+        0 30px 60px rgba(75,53,35,0.12);
+    }
+
+    .mandala::before,
+    .mandala::after{
+      content:"";
+      position:absolute;
+      inset:8%;
+      border-radius:50%;
+      border:1px dashed rgba(69,50,35,0.18);
+    }
+
+    .mandala::after{
+      inset:18%;
+      border-style:solid;
+      border-color:rgba(69,50,35,0.12);
+    }
+
+    .axis,
+    .axis::before{
+      position:absolute;
+      inset:0;
+      content:"";
+      border-radius:50%;
+      background:
+        linear-gradient(90deg, transparent 49.7%, rgba(83,62,46,0.12) 50%, transparent 50.3%),
+        linear-gradient(180deg, transparent 49.7%, rgba(83,62,46,0.12) 50%, transparent 50.3%);
+    }
+
+    .axis::before{
+      transform:rotate(30deg);
+    }
+
+    .axis.alt{
+      transform:rotate(60deg);
+    }
+
+    .core-text{
+      position:absolute;
+      text-align:center;
+      max-width:180px;
+      z-index:2;
+    }
+
+    .core-text strong{
+      display:block;
+      font-size:clamp(1.4rem, 3vw, 2rem);
+      font-family:"Cormorant Garamond", serif;
+      margin-bottom:6px;
+    }
+
+    .core-text span{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.45;
+    }
+
+    .ring-label{
+      position:absolute;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:.85rem;
+      font-weight:700;
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.52);
+      border:1px solid rgba(60,44,32,0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:0 10px 24px rgba(67,48,33,0.08);
+      white-space:nowrap;
+    }
+
+    .ring-label::before{
+      content:"";
+      width:7px;height:7px;border-radius:50%;
+      background:var(--accent);
+    }
+
+    .l1{ top:10%; left:54%; }
+    .l2{ top:30%; right:2%; }
+    .l3{ bottom:22%; right:8%; }
+    .l4{ bottom:8%; left:46%; }
+    .l5{ bottom:28%; left:0%; }
+    .l6{ top:28%; left:2%; }
+
+    section{
+      padding: 18px 0 22px;
+    }
+
+    .section-grid{
+      display:grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap:28px;
+      align-items:start;
+    }
+
+    .section-intro{
+      padding-top:12px;
+    }
+
+    .kicker{
+      font-size:.82rem;
+      font-weight:800;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin-bottom:14px;
+    }
+
+    h2{
+      font-size:clamp(2.2rem, 4.6vw, 4.4rem);
+      max-width:10ch;
+    }
+
+    .section-copy{
+      color:var(--muted);
+      font-size:1.03rem;
+      line-height:1.78;
+      max-width:56ch;
+      margin-top:18px;
+    }
+
+    .glass-block{
+      position:relative;
+      padding:24px;
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,0.48), rgba(255,255,255,0.24));
+      border:1px solid rgba(70,52,38,0.1);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+
+    .glass-block::before{
+      content:"";
+      position:absolute;
+      inset:auto -10% -35% auto;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(176,136,95,0.14), transparent 70%);
+      pointer-events:none;
+    }
+
+    .flow{
+      display:grid;
+      gap:16px;
+    }
+
+    .flow-item{
+      display:grid;
+      grid-template-columns: 54px 1fr;
+      gap:14px;
+      align-items:start;
+      padding:12px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .flow-item:last-child{ border-bottom:none; }
+
+    .num{
+      width:54px;height:54px;border-radius:50%;
+      display:grid;place-items:center;
+      font-weight:800;
+      color:var(--accent);
+      background:rgba(255,255,255,0.55);
+      border:1px solid rgba(82,61,46,0.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .flow-item h3{
+      font-size:1.7rem;
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .flow-item p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.72;
+      font-size:.98rem;
+    }
+
+    .split-band{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+    }
+
+    .band{
+      padding:22px;
+      border-radius:24px;
+      border:1px solid rgba(68,49,35,0.1);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.54), rgba(255,255,255,0.26));
+      min-height:100%;
+    }
+
+    .band h3{
+      font-size:2rem;
+      margin-bottom:10px;
+    }
+
+    .band p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.74;
+    }
+
+    .tools{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .tool{
+      min-height:122px;
+      padding:16px 14px;
+      border-radius:22px;
+      background:rgba(255,255,255,0.44);
+      border:1px solid rgba(68,49,35,0.08);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+    }
+
+    .tool:hover{
+      transform:translateY(-4px) rotate(-.4deg);
+      background:rgba(255,255,255,0.64);
+      box-shadow:0 18px 26px rgba(67,48,33,0.09);
+    }
+
+    .tool span{
+      width:40px;height:40px;border-radius:50%;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(176,136,95,0.22), rgba(47,107,98,0.12));
+      border:1px solid rgba(70,52,38,0.08);
+      font-size:1.1rem;
+    }
+
+    .tool strong{
+      font-size:.97rem;
+      line-height:1.3;
+    }
+
+    .quote{
+      margin-top:18px;
+      padding:28px;
+      border-left:3px solid var(--accent);
+      border-radius:0 22px 22px 0;
+      background:rgba(255,255,255,0.34);
+      color:var(--text);
+      font-family:"Cormorant Garamond", serif;
+      font-size:clamp(1.6rem, 3vw, 2.4rem);
+      line-height:1.15;
+    }
+
+    .quote small{
+      display:block;
+      margin-top:14px;
+      font-family:"Manrope", sans-serif;
+      font-size:.92rem;
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .cta{
+      padding:28px 0 64px;
+    }
+
+    .cta-shell{
+      position:relative;
+      overflow:hidden;
+      border-radius:36px;
+      background:
+        linear-gradient(135deg, rgba(63,46,34,0.95), rgba(108,78,53,0.92)),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+      color:#f8f1e8;
+      padding: clamp(26px, 5vw, 44px);
+      box-shadow:0 28px 60px rgba(58,41,28,0.24);
+    }
+
+    .cta-shell::before{
+      content:"";
+      position:absolute;
+      inset:-20% auto auto -10%;
+      width:320px;height:320px;border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,0.12), transparent 65%);
+      pointer-events:none;
+    }
+
+    .cta-grid{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:24px;
+      align-items:end;
+      position:relative;
+      z-index:1;
+    }
+
+    .cta h2{
+      max-width:12ch;
+      color:#fff6ed;
+    }
+
+    .cta p{
+      max-width:60ch;
+      margin:16px 0 0;
+      color:rgba(255,246,237,0.78);
+      line-height:1.78;
+    }
+
+    .cta .btn-primary{
+      background:linear-gradient(135deg, #e9d6bf 0%, #c59d70 100%);
+      color:#2e2118;
+      box-shadow:0 14px 26px rgba(0,0,0,0.18);
+    }
+
+    .cta .btn-primary:hover{
+      box-shadow:0 18px 34px rgba(0,0,0,0.22);
+    }
+
+    footer{
+      padding:0 0 34px;
+    }
+
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .foot a{
+      color:inherit;
+      text-decoration:none;
+      border-bottom:1px solid rgba(101,91,83,.35);
+    }
+
+    @media (max-width: 1080px){
+      .hero-grid,
+      .section-grid,
+      .cta-grid{
+        grid-template-columns:1fr;
+      }
+
+      .visual{
+        min-height:380px;
+      }
+
+      .tools{
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      h1{
+        max-width:12ch;
+      }
+    }
+
+    @media (max-width: 720px){
+      .wrap{
+        width:min(calc(100% - 20px), var(--max));
+      }
+
+      .nav{
+        border-radius:26px;
+        padding:14px;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .nav-actions{
+        width:100%;
+        flex-wrap:wrap;
+      }
+
+      .nav-link{
+        padding-left:0;
+      }
+
+      .hero{
+        padding-top:18px;
+      }
+
+      .hero-panel{
+        padding:22px;
+      }
+
+      .split-band{
+        grid-template-columns:1fr;
+      }
+
+      .tools{
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tool{
+        min-height:110px;
+      }
+
+      .visual{
+        min-height:320px;
+      }
+
+      .ring-label{
+        font-size:.76rem;
+        padding:7px 9px;
+      }
+
+      .l1{ top:7%; left:50%; }
+      .l2{ top:26%; right:-1%; }
+      .l3{ bottom:20%; right:4%; }
+      .l4{ bottom:6%; left:38%; }
+      .l5{ bottom:24%; left:-2%; }
+      .l6{ top:27%; left:-1%; }
+
+      .foot{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media (max-width: 520px){
+      h1{
+        font-size:clamp(2.6rem, 14vw, 4.2rem);
+      }
+
+      h2{
+        max-width:none;
+      }
+
+      .tools{
+        grid-template-columns:1fr;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .btn{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav stagger" aria-label="Основная навигация">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <strong>Ориентиры для проявления</strong>
+          <span>сакральные данные как внешний язык о вас</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-link" href="#about">О подходе</a>
+        <a class="nav-link" href="#why">Почему это работает</a>
+        <a class="nav-link" href="#tools">Инструменты</a>
+        <a class="btn btn-primary" href="#contact">Записаться</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div class="hero-panel">
+        <div class="orb one" aria-hidden="true"></div>
+        <div class="orb two" aria-hidden="true"></div>
+
+        <div class="hero-grid">
+          <div class="stagger">
+            <div class="eyebrow">не про эзотерику, а про ясность</div>
+            <h1>Помогаю реализовать себя с помощью сакральных данных</h1>
+            <p class="hero-lead">
+              Мы не уходим в мистификацию. Я использую внешние данные как систему ориентиров,
+              чтобы вы точнее увидели собственные интересы, способы проявления и направления,
+              в которых вам действительно есть на что опереться.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#contact">Хочу понять свои ориентиры</a>
+              <a class="btn btn-secondary" href="#about">Как проходит работа</a>
+            </div>
+            <div class="hero-note">
+              В центре внимания — не инструменты сами по себе, а ваши ощущения, опыт и живое движение в реальности.
+            </div>
+          </div>
+
+          <div class="visual reveal" aria-hidden="true">
+            <div class="mandala">
+              <div class="axis"></div>
+              <div class="axis alt"></div>
+              <div class="core-text">
+                <strong>Ваше проявление</strong>
+                <span>не создаётся с нуля — оно считывается, уточняется и становится яснее</span>
+              </div>
+              <div class="ring-label l1">астрология</div>
+              <div class="ring-label l2">нумерология</div>
+              <div class="ring-label l3">календарь Мая</div>
+              <div class="ring-label l4">лунный ритм</div>
+              <div class="ring-label l5">биоритмы</div>
+              <div class="ring-label l6">ваш опыт</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="wrap reveal">
+      <div class="section-grid">
+        <div class="section-intro">
+          <div class="kicker">О подходе</div>
+          <h2>Сначала — вы. Потом — любые системы.</h2>
+        </div>
+
+        <div class="glass-block">
+          <p class="section-copy" style="margin-top:0;">
+            Можно идти только через ощущения: разбирать, что хочется, а что нет. Это важный путь.
+            Но часто человек ограничен тем опытом, который уже у него есть: он может просто не знать,
+            что ему ещё доступно, или бессознательно двигаться внутри прошлых ограничений.
+          </p>
+          <p class="section-copy">
+            Поэтому внешние данные становятся не заменой вам, а дополнительной оптикой.
+            Они помогают увидеть повторяющиеся темы, сильные векторы, природные ритмы и способы реализации,
+            которые уже есть в вас, но ещё не были распознаны как опора.
+          </p>
+        </div>
+      </div>
+
+      <div class="split-band">
+        <div class="band reveal">
+          <h3>Без ухода от реальности</h3>
+          <p>
+            Мы говорим в первую очередь о вашем собственном опыте: что уже проявлялось,
+            где было живо, где было трудно, что отзывалось телом и вниманием.
+            Всё, что я использую, нужно не для веры, а для прояснения.
+          </p>
+        </div>
+        <div class="band reveal">
+          <h3>Для уверенного движения дальше</h3>
+          <p>
+            Моя задача — не привязать вас к интерпретациям, а помочь яснее подтвердить ваши
+            собственные интересы и опоры, чтобы дальше вы двигались самодостаточно и с большим доверием к себе.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="wrap reveal">
+      <div class="section-grid">
+        <div class="section-intro">
+          <div class="kicker">Почему это эффективно</div>
+          <h2>Когда появляется язык для внутреннего, становится проще действовать.</h2>
+        </div>
+
+        <div class="glass-block">
+          <div class="flow">
+            <div class="flow-item">
+              <div class="num">01</div>
+              <div>
+                <h3>Выход за пределы привычного опыта</h3>
+                <p>
+                  Часто человек оценивает себя только через то, что уже пробовал.
+                  Но это сужает картину. Внешние системы помогают увидеть потенциальные направления,
+                  которые могли не попасть в поле внимания.
+                </p>
+              </div>
+            </div>
+
+            <div class="flow-item">
+              <div class="num">02</div>
+              <div>
+                <h3>Подтверждение того, что уже чувствуется</h3>
+                <p>
+                  В процессе работы мы не навязываем значения, а сверяемся с тем,
+                  что вы и так о себе ощущаете. Это создаёт не зависимость от инструмента,
+                  а внутреннюю устойчивость и ясность.
+                </p>
+              </div>
+            </div>
+
+            <div class="flow-item">
+              <div class="num">03</div>
+              <div>
+                <h3>Ориентиры для реального проявления</h3>
+                <p>
+                  Важно не просто понять себя абстрактно, а найти, как это выходит в жизнь:
+                  в выборе направления, формата работы, ритма, способов взаимодействия с миром и собственной реализации на деле.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote reveal">
+        «Мы не ищем, кем вам надо стать. Мы проясняем, как яснее проявить то, что в вас уже есть.»
+        <small>
+          Это бережная и точная работа на пересечении вашего опыта, ощущений и внешних ориентиров.
+        </small>
+      </div>
+    </section>
+
+    <section id="tools" class="wrap reveal">
+      <div class="section-grid">
+        <div class="section-intro">
+          <div class="kicker">Инструменты</div>
+          <h2>Что я использую как ориентиры</h2>
+        </div>
+
+        <div class="glass-block">
+          <p class="section-copy" style="margin-top:0;">
+            Я использую разные системы не как абсолютную истину, а как способы посмотреть
+            на вас под разными углами. Каждая из них помогает выделить определённые закономерности,
+            ритмы и векторы проявления.
+          </p>
+
+          <div class="tools">
+            <div class="tool">
+              <span>✦</span>
+              <strong>Астрология</strong>
+            </div>
+            <div class="tool">
+              <span>∞</span>
+              <strong>Нумерология</strong>
+            </div>
+            <div class="tool">
+              <span>◐</span>
+              <strong>Лунный календарь</strong>
+            </div>
+            <div class="tool">
+              <span>◎</span>
+              <strong>Календарь Мая</strong>
+            </div>
+            <div class="tool">
+              <span>↺</span>
+              <strong>Биоритмы</strong>
+            </div>
+          </div>
+
+          <p class="section-copy">
+            Но главный фокус всегда остаётся на вас: на собственных ощущениях себя, на прожитом опыте,
+            на реальных ориентирах и на том, как найти выход этого в жизни.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta wrap reveal" id="contact">
+      <div class="cta-shell">
+        <div class="cta-grid">
+          <div>
+            <div class="kicker" style="color:rgba(255,246,237,0.7);">Запрос на работу</div>
+            <h2>Если вам важно не просто «понять себя», а начать проявляться точнее</h2>
+            <p>
+              Приходите, если хотите увидеть свои ориентиры яснее, подтвердить то, что уже чувствуется внутри,
+              и найти более уверенный способ двигаться дальше — без давления, без мистификации, с опорой на себя.
+            </p>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="https://max.ru/u/f9LHodD0cOKkV9nw2pnvN3nIDe8xLja4eoIkrFgwS2eLogzULjxH_ZOSKzU">Связаться со мной</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <div>© Минилендинг о работе с сакральными данными для реализации себя</div>
+      <div><a href="#about">О подходе</a> · <a href="#tools">Инструменты</a> · <a href="#contact">Контакт</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
